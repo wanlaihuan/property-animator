@@ -7,13 +7,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.AnticipateOvershootInterpolator;
 
 /**
  * Created by Carson_Ho on 17/4/18.
  */
 public class MyView extends View {
     // 设置需要用到的变量
-    public static final float RADIUS = 70f;// 圆的半径 = 70
+    public static final float RADIUS = 100f;// 圆的半径 = 70
     private Point currentPoint;// 当前点坐标
     private Paint mPaint;// 绘图画笔
 
@@ -43,9 +44,14 @@ public class MyView extends View {
             // (重点关注)将属性动画作用到View中
             // 步骤1:创建初始动画时的对象点  & 结束动画时的对象点
             Point startPoint = new Point(RADIUS, RADIUS);// 初始点为圆心(70,70)
-            Point endPoint = new Point(700, 1000);// 结束点为(700,1000)
+            Point endPoint = new Point(500, 800);// 结束点为(700,1000)
 
-            // 步骤2:创建动画对象 & 设置参数
+            /**
+             * TODO: 步骤2:创建动画对象 & 设置参数
+             * ValueAnimator 类动画的形式：ofInt、onFloat、ofObject
+             * ofObject: 作用于某个数据对象（自定义的数据结构类型）的动画 (被控制数据的变化)
+             * TypeEvaluator: 用来根据动画控制（比如插值）来计算得到的值，进而控制 ofObject 作用的数据变化，从而改变动画
+             */
             ValueAnimator anim = ValueAnimator.ofObject(new PointEvaluator(), startPoint, endPoint);
 
             // 参数说明
@@ -71,6 +77,7 @@ public class MyView extends View {
                 }
             });
 
+            anim.setInterpolator(new AnticipateOvershootInterpolator());
             anim.start();
             // 启动动画
 

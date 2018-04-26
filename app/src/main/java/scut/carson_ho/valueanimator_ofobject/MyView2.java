@@ -15,16 +15,17 @@ public class MyView2 extends View {
     public static final float RADIUS = 100f;// 圆的半径 = 100
     private Paint mPaint;// 绘图画笔
 
-    private String color;
+    private String color1;
     // 设置背景颜色属性
 
     // 设置背景颜色的get() & set()方法
-    public String getColor() {
-        return color;
+    public String getColor1() {
+        return color1;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    // 方法名一定要和动画对象保持一致
+    public void setColor1(String color) {
+        this.color1 = color;
         mPaint.setColor(Color.parseColor(color));
         // 将画笔的颜色设置成方法参数传入的颜色
         invalidate();
