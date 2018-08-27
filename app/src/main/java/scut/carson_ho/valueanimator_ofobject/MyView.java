@@ -46,25 +46,16 @@ public class MyView extends View {
             Point startPoint = new Point(RADIUS, RADIUS);// 初始点为圆心(70,70)
             Point endPoint = new Point(500, 800);// 结束点为(700,1000)
 
-            /**
-             * TODO: 步骤2:创建动画对象 & 设置参数
-             * ValueAnimator 类动画的形式：ofInt、onFloat、ofObject
-             * ofObject: 作用于某个数据对象（自定义的数据结构类型）的动画 (被控制数据的变化)
-             * TypeEvaluator: 用来根据动画控制（比如插值）来计算得到的值，进而控制 ofObject 作用的数据变化，从而改变动画
-             */
-            ValueAnimator anim = ValueAnimator.ofObject(new PointEvaluator(), startPoint, endPoint);
+            ValueAnimator anim1 = new ValueAnimator();
+            anim1.setObjectValues(startPoint, endPoint);
+            anim1.setEvaluator(new PointEvaluator());
 
-            // 参数说明
-            // 参数1：TypeEvaluator 类型参数 - 使用自定义的PointEvaluator(实现了TypeEvaluator接口)
-            // 参数2：初始动画的对象点
-            // 参数3：结束动画的对象点
-
-            anim.setDuration(5000);
+            anim1.setDuration(5000);
             // 设置动画时长
 
             // 设置 属性值的更新监听器
             // 即每当坐标值(Point值)更新一次,该方法就会被调用一次
-            anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            anim1.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     currentPoint = (Point) animation.getAnimatedValue();
@@ -77,8 +68,42 @@ public class MyView extends View {
                 }
             });
 
-            anim.setInterpolator(new AnticipateOvershootInterpolator());
-            anim.start();
+            anim1.setInterpolator(new AnticipateOvershootInterpolator());
+            anim1.start();
+
+            /**
+             * TODO: 步骤2:创建动画对象 & 设置参数
+             * ValueAnimator 类动画的形式：ofInt、onFloat、ofObject
+             * ofObject: 作用于某个数据对象（自定义的数据结构类型）的动画 (被控制数据的变化)
+             * TypeEvaluator: 用来根据动画控制（比如插值）来计算得到的值，进而控制 ofObject 作用的数据变化，从而改变动画
+             */
+//            ValueAnimator anim = ValueAnimator.ofObject(new PointEvaluator(), startPoint, endPoint);
+//
+//            // 参数说明
+//            // 参数1：TypeEvaluator 类型参数 - 使用自定义的PointEvaluator(实现了TypeEvaluator接口)
+//            // 参数2：初始动画的对象点
+//            // 参数3：结束动画的对象点
+//
+//            anim.setDuration(5000);
+//            // 设置动画时长
+//
+//            // 设置 属性值的更新监听器
+//            // 即每当坐标值(Point值)更新一次,该方法就会被调用一次
+//            anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//                @Override
+//                public void onAnimationUpdate(ValueAnimator animation) {
+//                    currentPoint = (Point) animation.getAnimatedValue();
+//                    // 返回当前值到当前坐标值(currentPoint)
+//                    // 从而更新当前坐标值(currentPoint)
+//
+//                    invalidate();
+//                    // 调用invalidate()后,就会刷新View,即才能看到重新绘制的界面,即onDraw()会被重新调用一次
+//                    // 所以坐标值每改变一次,就会调用onDraw()一次
+//                }
+//            });
+//
+//            anim.setInterpolator(new AnticipateOvershootInterpolator());
+//            anim.start();
             // 启动动画
 
 
